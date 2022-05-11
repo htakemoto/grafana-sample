@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Helm
+charts/charts/*.tgz
+charts/*.lock
+
+# Miscs
+.env*
