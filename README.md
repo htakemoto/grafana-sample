@@ -1,4 +1,11 @@
-# Grafana Sample
+# Grafana Sample with Helm Chart
+
+Grafana with Loki and Promtail
+
+- **Loki**: horizontally-scalable, highly-available, multi-tenant log aggregation system inspired by Prometheus
+- **Promtail**: agent which ships the contents of local logs to Loki
+
+![Grafana Screenshot](./docs/grafana-screenshot.png)
 
 ## Local Environment Setup
 
@@ -15,6 +22,7 @@ Configure `_scm_config/values.local.yaml`
 # register helm repo
 helm repo list
 helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
 # install dependencies
 helm dep update ./charts
 # start local k8s cluster
