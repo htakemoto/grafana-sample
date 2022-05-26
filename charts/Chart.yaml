@@ -27,9 +27,19 @@ dependencies:
   - name: grafana
     version: 6.29.2
     repository: https://grafana.github.io/helm-charts
-  - name: loki
+  - condition: loki.enabled
+    name: loki
     version: 2.11.1
     repository: https://grafana.github.io/helm-charts
-  - name: promtail
+  - condition: promtail.enabled
+    name: promtail
     version: 4.2.0
     repository: https://grafana.github.io/helm-charts
+  - condition: elasticsearch.enabled
+    name: elasticsearch
+    version: 7.17.3
+    repository: https://helm.elastic.co
+  - condition: postgresql.enabled
+    name: postgresql
+    version: 11.1.7
+    repository: https://charts.bitnami.com/bitnami

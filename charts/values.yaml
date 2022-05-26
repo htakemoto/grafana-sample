@@ -21,9 +21,37 @@ grafana:
       - name: Loki
         type: loki
         url: http://loki:3100
+        editable: true
+      - name: PostgreSQL
+        type: postgres
+        uid: PCC52D03280B7034C
+        url: postgresql:5432
+        database: localdb
+        user: app_local
+        secureJsonData:
+          password: changeme
+        jsonData:
+          sslmode: disable
+          postgresVersion: 1200
+        editable: true
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'default'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+  dashboardsConfigMaps:
+    default: "grafana-dashboards"
 
 # Ref: https://github.com/grafana/helm-charts/blob/main/charts/loki/values.yaml
 loki:
+  enabled: true
   fullnameOverride: loki
   config:
     server:
@@ -31,6 +59,52 @@ loki:
 
 # Ref: https://github.com/grafana/helm-charts/blob/main/charts/promtail/values.yaml
 promtail:
+  enabled: true
   fullnameOverride: promtail
   config:
     lokiAddress: http://loki:3100/loki/api/v1/push
+
+# Ref: https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml
+elasticsearch:
+  enabled: true
+  fullnameOverride: elasticsearch
+  replicas: 1
+  minimumMasterNodes: 1
+  persistence:
+    enabled: false
+  tests:
+    enabled: false
+
+# Ref: https://artifacthub.io/packages/helm/bitnami/postgresql
+postgresql:
+  enabled: true
+  fullnameOverride: postgresql
+  service:
+    ports:
+      postgresql: 5432
+  auth:
+    username: app_local
+    password: changeme
+    database: localdb
+  primary:
+    persistence:
+      enabled: false
+    initdb:
+      scripts:
+        init.sql: |
+          CREATE TABLE sample_table (
+            id SERIAL PRIMARY KEY,
+            username TEXT,
+            total INT
+          );
+          INSERT INTO sample_table (username, total)
+          VALUES
+            ('Cat',56),
+            ('Dog',35),
+            ('Lizard',41),
+            ('Crocodile',22),
+            ('Koala',26),
+            ('Cassowary',29),
+            ('Peacock',19),
+            ('Emu',10),
+            ('Kangaroo',13);

@@ -8,5 +8,11 @@ dependencies:
 - name: promtail
   repository: https://grafana.github.io/helm-charts
   version: 4.2.0
-digest: sha256:3c4d93cac1bf1fc934f57a9bb303aaf938289bd68b9be951239efc88040fa8a2
-generated: "2022-05-11T12:27:09.522668-04:00"
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.17.3
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.1.7
+digest: sha256:7c77d73a1be73b631a00eb155f8294ce9cc52bd3a3aa217d6b6c0644d8cf4d65
+generated: "2022-05-26T09:16:35.965621-04:00"

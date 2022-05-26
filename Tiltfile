@@ -4,8 +4,10 @@
 
 helmValues = read_yaml('./charts/values.yaml')
 grafanaPort = int(helmValues['grafana']['grafana.ini']['server']['http_port'])
-lokiPort = 3100
 promtailPort = 3101
+lokiPort = 3100
+elasticsearchPort = 9200
+postgresqlPort = int(helmValues['postgresql']['service']['ports']['postgresql'])
 
 # Kubernetes
 
@@ -21,6 +23,13 @@ k8s_resource('grafana',
   labels=['UI']
 )
 
+k8s_resource('promtail',
+  port_forwards=[
+    port_forward(promtailPort, promtailPort)
+  ],
+  labels=['Agent']
+)
+
 k8s_resource('loki',
   port_forwards=[
     port_forward(lokiPort, lokiPort)
@@ -32,9 +41,16 @@ k8s_resource('loki',
   labels=['Database']
 )
 
-k8s_resource('promtail',
+k8s_resource('elasticsearch',
   port_forwards=[
-    port_forward(promtailPort, promtailPort)
+    port_forward(elasticsearchPort, elasticsearchPort)
   ],
-  labels=['Agent']
+  labels=['Database']
+)
+
+k8s_resource('postgresql',
+  port_forwards=[
+    port_forward(postgresqlPort, postgresqlPort)
+  ],
+  labels=['Database']
 )
