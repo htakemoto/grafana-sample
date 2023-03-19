@@ -33,7 +33,7 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
   - condition: promtail.enabled
     name: promtail
-    version: 4.2.1
+    version: 6.9.3
     repository: https://grafana.github.io/helm-charts
   - condition: elasticsearch.enabled
     name: elasticsearch
