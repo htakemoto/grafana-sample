@@ -1,18 +1,18 @@
 dependencies:
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 6.29.2
+  version: 6.51.1
 - name: loki
   repository: https://grafana.github.io/helm-charts
-  version: 2.11.1
+  version: 2.16.0
 - name: promtail
   repository: https://grafana.github.io/helm-charts
-  version: 4.2.0
+  version: 4.2.1
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 11.1.7
-digest: sha256:7c77d73a1be73b631a00eb155f8294ce9cc52bd3a3aa217d6b6c0644d8cf4d65
-generated: "2022-05-26T09:16:35.965621-04:00"
+  version: 12.2.1
+digest: sha256:3e11ad420e26134b76f39fbb087e1e17d6b19f332550d590e3099b5eb764acfb
+generated: "2023-03-18T22:25:54.674782-04:00"

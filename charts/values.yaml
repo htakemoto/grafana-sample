@@ -4,14 +4,11 @@ grafana:
     enabled: false
   adminUser: admin
   adminPassword: admin
-  grafana.ini:
-    server:
-      protocol: http
-      http_port: 3000
-      domain: localhost
-      serve_from_sub_path: false
-    smtp:
-      enabled: false
+  service:
+    enabled: false
+    type: ClusterIP
+    port: 80
+    targetPort: 3000
   ingress:
     enabled: false
   datasources:
@@ -49,7 +46,7 @@ grafana:
   dashboardsConfigMaps:
     default: "grafana-dashboards"
 
-# Ref: https://github.com/grafana/helm-charts/blob/main/charts/loki/values.yaml
+# Ref: https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
 loki:
   enabled: true
   fullnameOverride: loki

@@ -3,9 +3,9 @@
 # Helm Values
 
 helmValues = read_yaml('./charts/values.yaml')
-grafanaPort = int(helmValues['grafana']['grafana.ini']['server']['http_port'])
+grafanaPort = int(helmValues['grafana']['service']['targetPort'])
 promtailPort = 3101
-lokiPort = 3100
+lokiPort = int(helmValues['loki']['config']['server']['http_listen_port'])
 elasticsearchPort = 9200
 postgresqlPort = int(helmValues['postgresql']['service']['ports']['postgresql'])
 

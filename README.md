@@ -16,8 +16,6 @@ Grafana with Loki and Promtail and some other data sources
 
 ### Quick Start on Local Machine
 
-Configure `_scm_config/values.local.yaml`
-
 ```bash
 # register helm repo
 helm repo list
@@ -49,7 +47,21 @@ Simple Data is stored at the initial launch configured on `charts/values.yaml`.
 
 **Elasticsearch**
 
-No data is stored at the initial launch.
+Run the following command to prepare data
+
+```bash
+curl -XPUT 'localhost:9200/companydatabase?pretty' -H 'Content-Type: application/json' -d '{"mappings" : { "properties" : { "FirstName" : { "type" : "text" }, "LastName" : { "type" : "text" }, "Designation" : { "type" : "text" }, "Salary" : { "type" : "integer" }, "DateOfJoining" : { "type" : "date", "format": "yyyy-MM-dd" }, "Address" : { "type" : "text" }, "Gender" : { "type" : "text" }, "Age" : { "type" : "integer" }, "MaritalStatus" : { "type" : "text" }, "Interests" : { "type" : "text" }}}}'
+
+
+curl -XPUT 'localhost:9200/companydatabase' -H 'Content-Type: application/json' -d '{"mappings" : { "_default_":{ "_timestamp" : { "enabled" : true, "store" : true } } } }'
+
+curl -XDELETE 'localhost:9200/companydatabase'
+
+curl -XPUT 'localhost:9200/companydatabase/_bulk' -H 'Content-Type: application/json' --data-binary @data/Employees1K.json
+curl http://localhost:9200/companydatabase/_count
+```
+
+However this dataset does not contain timestamp, so it needs to be modified somehow.
 
 ### Notes
 
